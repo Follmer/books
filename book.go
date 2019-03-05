@@ -1,13 +1,32 @@
 package main
 
+import (
+	"database/sql"
+	"errors"
+)
+
 type Book struct {
-	ID          int    `json:id,omitempty`
-	Title       string `json:title,omitempty`
-	Author      string `json:author,omitempty`
-	Publisher   string `json:publisher,omitempty`
-	PublishDate string `json:publishdate,omitempty`
-	Rating      int64  `json:rating,omitempty`
-	Status      bool   `json:status,omitempty`
+	ID          int    `json:"id"`
+	Title       string `json:"title"`
+	Author      string `json:"author"`
+	Publisher   string `json:"publisher"`
+	PublishDate string `json:"publishdate"`
+	Rating      int64  `json:"rating"`
+	Status      bool   `json:"status"`
 }
 
-var books []Book
+func (b *Book) getBook(db *sql.DB) error {
+	return errors.New("Not implemented")
+}
+func (b *Book) updateBook(db *sql.DB) error {
+	return errors.New("Not implemented")
+}
+func (b *Book) deleteBook(db *sql.DB) error {
+	return errors.New("Not implemented")
+}
+func (b *Book) createBook(db *sql.DB) error {
+	return errors.New("Not implemented")
+}
+func getBooks(db *sql.DB, start, count int) ([]Book, error) {
+	return nil, errors.New("Not implemented")
+}
