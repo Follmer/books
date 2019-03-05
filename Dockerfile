@@ -8,7 +8,7 @@ FROM golang:latest
 LABEL maintainer="Kyle Follmer <follmerka@gmail.com>"
 
 # Set the Current Working Directory inside the container
-WORKDIR $GOPATH/projects/books
+WORKDIR $GOPATH/src/github.com/books
 
 # Copy everything from the current directory to the PWD(Present Working Directory) inside the container
 COPY . .
