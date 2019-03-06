@@ -1,10 +1,6 @@
 
 # Dockerfile References: https://docs.docker.com/engine/reference/builder/
 
-
-RUN go get github.com/gorilla/mux
-RUN go get github.com/go-sql-driver/mysql
-
 FROM mysql
 
 ENV MYSQL_ROOT_PASSWORD password
@@ -17,6 +13,9 @@ COPY ./sql/ /docker-entrypoint-initdb.d/
 
 # Start from golang latest base image
 FROM golang:latest
+
+RUN go get github.com/gorilla/mux
+RUN go get github.com/go-sql-driver/mysql
 
 # Add Maintainer Info
 LABEL maintainer="Kyle Follmer <follmerka@gmail.com>"
@@ -38,4 +37,11 @@ RUN go install -v ./...
 EXPOSE 8080
 
 # Run the executable
-CMD ["go-docker"]
+# CMD ["main"]
+
+RUN GOROOT=/usr/lib/go
+RUN GOPATH=/root/gocode
+RUN PATH=$GOPATH/bin:$PATH
+RUN export GOROOT GOPATH PATH
+
+ENV PATH="/opt/gtk/bin:${PATH}"

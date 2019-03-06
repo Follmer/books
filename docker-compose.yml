@@ -1,9 +1,14 @@
 version: "2"
 
 services:
-  app:
-    image: golang:1.6.1-alpine
+  books:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: books
+    ports:
+      - "43306:43306"
     volumes:
       - .:/go/src/books
     working_dir: /go/src/books
-    command: go test -v
+    # command: go test -v
