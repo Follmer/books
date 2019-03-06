@@ -1,6 +1,20 @@
 
 # Dockerfile References: https://docs.docker.com/engine/reference/builder/
 
+
+RUN go get github.com/gorilla/mux
+RUN go get github.com/go-sql-driver/mysql
+
+FROM mysql
+
+ENV MYSQL_ROOT_PASSWORD password
+
+# Add db
+ENV MYSQL_DATABASE books
+
+# Add the sql dir
+COPY ./sql/ /docker-entrypoint-initdb.d/
+
 # Start from golang latest base image
 FROM golang:latest
 
