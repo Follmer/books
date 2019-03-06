@@ -1,0 +1,9 @@
+version: "2"
+
+services:
+  app:
+    image: golang:1.6.1-alpine
+    volumes:
+      - .:/go/src/books
+    working_dir: /go/src/books
+    command: go test -v
