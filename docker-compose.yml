@@ -11,4 +11,16 @@ services:
     volumes:
       - .:/go/src/books
     working_dir: /go/src/books
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
     # command: go test -v
