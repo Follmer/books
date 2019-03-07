@@ -63,7 +63,7 @@ func TestGetNonExistentBook(t *testing.T) {
 
 func TestCreateBook(t *testing.T) {
 	clearTable()
-	payload := []byte(`{"title": "test book", "rating": 3}`)
+	payload := []byte(`{"title": "test book", "author": "bob", "publisher": "jerry", "publishdate": "04/10/2010", "rating": 3, "status": false}`)
 	req, _ := http.NewRequest("POST", "/book", bytes.NewBuffer(payload))
 	response := executeRequest(req)
 	checkResponseCode(t, http.StatusCreated, response.Code)
@@ -75,8 +75,24 @@ func TestCreateBook(t *testing.T) {
 		t.Errorf("Expected book title to be 'test book'. Got '%v'", m["title"])
 	}
 
+	if m["author"] != "bob" {
+		t.Errorf("Expected book author to be 'bob'. Got '%v'", m["author"])
+	}
+
+	if m["publisher"] != "jerry" {
+		t.Errorf("Expected book publisher to be 'jerry'. Got '%v'", m["publisher"])
+	}
+
+	if m["publishdate"] != "04/10/2010" {
+		t.Errorf("Expected book publishdate to be '04/10/2010'. Got '%v'", m["publishdate"])
+	}
+
 	if m["rating"] != 3.0 {
 		t.Errorf("Expected book rating to be '3'. Got '%v'", m["age"])
+	}
+
+	if m["status"] != false {
+		t.Errorf("Expected book status to be 'false'. Got '%v'", m["status"])
 	}
 
 	if m["id"] != 1.0 {

@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
@@ -37,6 +38,7 @@ func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/book/{id:[0-9]+}", a.updateBook).Methods("PUT")
 	a.Router.HandleFunc("/book/{id:[0-9]+}", a.deleteBook).Methods("DELETE")
 }
+
 func (a *App) getBook(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
@@ -90,7 +92,20 @@ func (a *App) createBook(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 
 	if err := decoder.Decode(&b); err != nil {
+		println(decoder.Decode(&b))
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+
+	_, err := time.Parse("01/02/2006", b.PublishDate)
+
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid PublishDate format")
+		return
+	}
+
+	if b.Rating < 1 || b.Rating > 3 {
+		respondWithError(w, http.StatusBadRequest, "Out of bounds value for \"Rating\"")
 		return
 	}
 
