@@ -1,13 +1,13 @@
 version: "2"
 
 services:
-  booker:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
-    image: books
+    # image: books
     ports:
-      - "43306:43306"
+      - "3306:3306"
     volumes:
       - .:/go/src/books
     working_dir: /go/src/books
@@ -19,4 +19,4 @@ services:
       - MYSQL_USER=demouser
       - MYSQL_PASSWORD=password
     ports:
-      - 3306:3306
+      - 3307:3307
